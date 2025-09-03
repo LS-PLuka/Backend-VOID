@@ -15,3 +15,58 @@ datasource db {
 }
 
 // Banco de Dados VOID - MySQL
+model Usuario {
+  id        Int       @id @default(autoincrement())
+  nome      String
+  email     String    @unique
+  senha     String
+  role      String    @default("cliente")
+  criadoEm  DateTime  @default(now())
+
+  sacola Sacola?
+}
+
+model Marca {
+  id         Int       @id @default(autoincrement())
+  nome       String    @unique
+  descricao  String?
+  imagemUrl  String
+  produtos   Produto[]
+}
+
+model Produto {
+  id          Int        @id @default(autoincrement())
+  nome        String
+  descricao   String?
+  preco       Float
+  estoque     Int
+  imagem1Url  String
+  imagem2Url  String
+  criadoEm    DateTime   @default(now())
+
+  marcaId Int
+  marca   Marca        @relation(fields: [marcaId], references: [id])
+
+  itensSacola ItemSacola[]
+}
+
+model Sacola {
+  id        Int         @id @default(autoincrement())
+  criadoEm  DateTime    @default(now())
+
+  usuarioId Int  @unique
+  usuario   Usuario     @relation(fields: [usuarioId], references: [id])
+
+  itens     ItemSacola[]
+}
+
+model ItemSacola {
+  id         Int      @id @default(autoincrement())
+  quantidade Int      @default(1)
+
+  sacolaId   Int
+  sacola     Sacola   @relation(fields: [sacolaId], references: [id])
+
+  produtoId  Int
+  produto    Produto  @relation(fields: [produtoId], references: [id])
+}
