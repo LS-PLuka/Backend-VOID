@@ -15,7 +15,7 @@ datasource db {
 }
 
 // Banco de Dados VOID - MySQL
-model Usuario {
+model usuario {
   id        Int       @id @default(autoincrement())
   nome      String
   email     String    @unique
@@ -23,18 +23,18 @@ model Usuario {
   role      String    @default("cliente")
   criadoEm  DateTime  @default(now())
 
-  sacola Sacola?
+  sacola sacola?
 }
 
-model Marca {
+model marca {
   id         Int       @id @default(autoincrement())
   nome       String    @unique
   descricao  String?
   imagemUrl  String
-  produtos   Produto[]
+  produtos   produto[]
 }
 
-model Produto {
+model produto {
   id          Int        @id @default(autoincrement())
   nome        String
   descricao   String?
@@ -45,28 +45,28 @@ model Produto {
   criadoEm    DateTime   @default(now())
 
   marcaId Int
-  marca   Marca        @relation(fields: [marcaId], references: [id])
+  marca   marca        @relation(fields: [marcaId], references: [id])
 
-  itensSacola ItemSacola[]
+  itensSacola itemSacola[]
 }
 
-model Sacola {
+model sacola {
   id        Int         @id @default(autoincrement())
   criadoEm  DateTime    @default(now())
 
   usuarioId Int  @unique
-  usuario   Usuario     @relation(fields: [usuarioId], references: [id])
+  usuario   usuario     @relation(fields: [usuarioId], references: [id])
 
-  itens     ItemSacola[]
+  itens     itemSacola[]
 }
 
-model ItemSacola {
+model itemSacola {
   id         Int      @id @default(autoincrement())
   quantidade Int      @default(1)
 
   sacolaId   Int
-  sacola     Sacola   @relation(fields: [sacolaId], references: [id])
+  sacola     sacola   @relation(fields: [sacolaId], references: [id])
 
   produtoId  Int
-  produto    Produto  @relation(fields: [produtoId], references: [id])
+  produto    produto  @relation(fields: [produtoId], references: [id])
 }
