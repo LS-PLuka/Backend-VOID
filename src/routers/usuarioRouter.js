@@ -1,7 +1,7 @@
 import express from 'express'
 
 // Importando Controllers
-import { createUsuario } from '../controllers/usuario/createUsuarioController.js'
+import { createUsuarioController } from '../controllers/usuario/createUsuarioController.js'
 import { listUsuarioController } from '../controllers/usuario/listUsuarioController.js'
 import { getByIdUsuarioController } from '../controllers/usuario/getByIdUsuarioController.js'
 import { editUsuarioController } from '../controllers/usuario/editUsuarioController.js'
@@ -10,7 +10,7 @@ import { deleteUsuarioController } from '../controllers/usuario/deleteUsuarioCon
 // Criando Rotas
 const router = express.Router()
 
-router.post('/', createUsuario)
+router.post('/', createUsuarioController)
 router.get('/', listUsuarioController)
 router.get('/:id', getByIdUsuarioController)
 router.put('/:id', editUsuarioController)
