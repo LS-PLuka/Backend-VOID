@@ -11,7 +11,13 @@ export async function create(dados) {
             email: dados.email,
             senha: dados.senha,
             role: dados.role || "cliente",
+            sacola: {
+                create: {}
+            }
         },
+        include: {
+            sacola: true
+        }
     });
 
         return usuario;
