@@ -14,8 +14,10 @@ app.listen(port, () => {
 import usuarioRouter from './routers/usuarioRouter.js'
 import marcaRouter from './routers/marcaRouter.js'
 import produtoRouter from './routers/produtoRouter.js'
+import sacolaRouter from './routers/sacolaRouter.js'
 
 // Usando Routers
 app.use('/usuarios', usuarioRouter)
 app.use('/marcas', marcaRouter)
 app.use('/produtos', produtoRouter)
+app.use('/sacolas', sacolaRouter)
