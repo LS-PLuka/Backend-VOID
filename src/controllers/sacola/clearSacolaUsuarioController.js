@@ -1,4 +1,4 @@
-import { clearSacola } from "../../models/sacolaModel";
+import { clearSacola } from "../../models/sacolaModel.js";
 
 export async function clearSacolaUsuarioController(req, res) {
     const { usuarioId } = req.params;

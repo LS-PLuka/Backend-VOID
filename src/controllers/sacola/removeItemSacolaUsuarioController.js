@@ -1,4 +1,4 @@
-import { removeItemSacola } from "../../models/sacolaModel";
+import { removeItemSacola } from "../../models/sacolaModel.js";
 
 export async function removeItemSacolaUsuarioController(req, res) {
     const { itemId } = req.params;
