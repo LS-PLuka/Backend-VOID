@@ -2,35 +2,30 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-// Funções CRUD sacola
+// Funções CRUD para Sacola
 export async function getSacolaByUsuarioId(usuarioId) {
     try {
         const sacola = await prisma.sacola.findUnique({
             where: { usuarioId: Number(usuarioId) },
             include: {
-                itens: {
-                    include: { produto: true }
-                }
+                itens: { include: { produto: true } }
             }
         })
-        
         return sacola
     } catch (error) {
-        throw new Error('Erro ao buscar sacola do usuario: ' + error.message)
+        throw new Error('Erro ao buscar sacola do usuário: ' + error.message)
     }
 }
 
 export async function addItemSacola(usuarioId, produtoId, quantidade) {
     try {
-        let sacola = await prisma.sacola.findUnique({
+        const sacola = await prisma.sacola.findUnique({
             where: { usuarioId: Number(usuarioId) }
         })
 
-        if (!sacola) {
-            throw new Error('Sacola não encontrada para o usuário.')
-        }
+        if (!sacola) throw new Error('Sacola não encontrada para o usuário.')
 
-        const itemExistente = await prisma.sacolaItem.findFirst({
+        const itemExistente = await prisma.itemSacola.findFirst({
             where: {
                 sacolaId: sacola.id,
                 produtoId: Number(produtoId)
@@ -38,16 +33,16 @@ export async function addItemSacola(usuarioId, produtoId, quantidade) {
         })
 
         if (itemExistente) {
-            return await prisma.sacolaItem.update({
+            return await prisma.itemSacola.update({
                 where: { id: itemExistente.id },
-                data: { quantidade: itemExistente.quantidade + quantidade }
+                data: { quantidade: itemExistente.quantidade + Number(quantidade) }
             })
         } else {
-            return await prisma.sacolaItem.create({
+            return await prisma.itemSacola.create({
                 data: {
                     sacolaId: sacola.id,
                     produtoId: Number(produtoId),
-                    quantidade: quantidade
+                    quantidade: Number(quantidade)
                 }
             })
         }
@@ -62,7 +57,7 @@ export async function removeItemSacola(itemId) {
             where: { id: Number(itemId) }
         })
     } catch (error) {
-        throw new Error("Erro ao remover item da sacola: " + error.message)
+        throw new Error('Erro ao remover item da sacola: ' + error.message)
     }
 }
 
@@ -72,16 +67,14 @@ export async function clearSacola(usuarioId) {
             where: { usuarioId: Number(usuarioId) }
         })
 
-        if (!sacola) {
-            throw new Error("Sacola não encontrada para este usuário")
-        }
+        if (!sacola) throw new Error('Sacola não encontrada para este usuário')
 
         await prisma.itemSacola.deleteMany({
             where: { sacolaId: sacola.id }
         })
 
-        return { message: "Sacola esvaziada com sucesso" }
+        return { message: 'Sacola esvaziada com sucesso' }
     } catch (error) {
-        throw new Error("Erro ao limpar sacola: " + error.message)
+        throw new Error('Erro ao limpar sacola: ' + error.message)
     }
 }

@@ -6,12 +6,12 @@ import { addItemSacolaUsuarioController } from '../controllers/sacola/addItemSac
 import { removeItemSacolaUsuarioController } from '../controllers/sacola/removeItemSacolaUsuarioController.js'
 import { clearSacolaUsuarioController } from '../controllers/sacola/clearSacolaUsuarioController.js'
 
-// Criando Rotas
+// Criando Routers
 const router = express.Router()
 
 router.get('/:usuarioId', getSacolaUsuarioController)
-router.post('/item', addItemSacolaUsuarioController)
-router.delete('/item/:itemId', removeItemSacolaUsuarioController)
-router.delete('/clear/:usuarioId', clearSacolaUsuarioController)
+router.post('/:usuarioId/itens', addItemSacolaUsuarioController)
+router.delete('/:usuarioId/itens/:itemId', removeItemSacolaUsuarioController)
+router.delete('/:usuarioId/itens', clearSacolaUsuarioController)
 
 export default router
