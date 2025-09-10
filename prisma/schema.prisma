@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -24,6 +21,7 @@ model usuario {
 
   sacola    sacola?
   favoritos favorito[]
+  cartoes   cartao[]
 }
 
 model marca {
@@ -48,7 +46,7 @@ model produto {
   marca   marca        @relation(fields: [marcaId], references: [id])
 
   itensSacola itemSacola[]
-  favoritos   favorito[]  // RELAÇÃO inversa
+  favoritos   favorito[]
 }
 
 model sacola {
@@ -83,4 +81,20 @@ model favorito {
   produto    produto  @relation(fields: [produtoId], references: [id])
 
   @@unique([usuarioId, produtoId])
+}
+
+model cartao {
+  id              Int       @id @default(autoincrement())
+  usuarioId       Int
+  usuario         usuario   @relation(fields: [usuarioId], references: [id])
+  
+  numero          String
+  nomeTitular     String
+  validadeMes     Int
+  validadeAno     Int
+  codigoSeguranca String
+
+  criadoEm        DateTime  @default(now())
+
+  @@index([usuarioId])
 }
