@@ -22,7 +22,8 @@ model usuario {
   role      String    @default("cliente")
   criadoEm  DateTime  @default(now())
 
-  sacola sacola?
+  sacola    sacola?
+  favoritos favorito[]
 }
 
 model marca {
@@ -47,6 +48,7 @@ model produto {
   marca   marca        @relation(fields: [marcaId], references: [id])
 
   itensSacola itemSacola[]
+  favoritos   favorito[]  // RELAÇÃO inversa
 }
 
 model sacola {
@@ -68,4 +70,17 @@ model itemSacola {
 
   produtoId  Int
   produto    produto  @relation(fields: [produtoId], references: [id])
+}
+
+model favorito {
+  id         Int      @id @default(autoincrement())
+  criadoEm   DateTime @default(now())
+
+  usuarioId  Int
+  usuario    usuario  @relation(fields: [usuarioId], references: [id])
+
+  produtoId  Int
+  produto    produto  @relation(fields: [produtoId], references: [id])
+
+  @@unique([usuarioId, produtoId])
 }
