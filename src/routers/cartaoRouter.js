@@ -11,7 +11,7 @@ import { deleteCartaoController } from '../controllers/cartao/deleteCartaoContro
 const router = express.Router()
 
 router.post('/', createCartaoController)
-router.get('/:usuarioId', listCartoesUsuarioController)
+router.get('/usuario/:usuarioId', listCartoesUsuarioController)
 router.get('/:id', getCartaoController)
 router.put('/:id', editCartaoController)
 router.delete('/:id', deleteCartaoController)
