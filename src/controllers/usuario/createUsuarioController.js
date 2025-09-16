@@ -5,6 +5,6 @@ export async function createUsuarioController(req, res) {
     const usuario = await create(req.body);
     res.status(201).json(usuario);
   } catch (error) {
-    res.status(400).json({ erro: error.message });
+    res.status(500).json({ erro: error.message });
   }
 }

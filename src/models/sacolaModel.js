@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-// Funções CRUD para Sacola
+// Funções CRUD Sacola
 export async function getSacolaByUsuarioId(usuarioId) {
     try {
         const sacola = await prisma.sacola.findUnique({

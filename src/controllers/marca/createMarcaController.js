@@ -5,6 +5,6 @@ export async function createMarca(req, res) {
     const marca = await create(req.body);
     res.status(201).json(marca);
   } catch (error) {
-    res.status(400).json({ erro: error.message });
+    res.status(500).json({ erro: error.message });
   }
 }

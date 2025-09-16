@@ -5,6 +5,6 @@ export async function createProdutoController(req, res) {
         const produto = await create(req.body);
         res.status(201).json(produto);
     } catch (error) {
-        res.status(400).json({ erro: error.message });
+        res.status(500).json({ erro: error.message });
     }  
 }
