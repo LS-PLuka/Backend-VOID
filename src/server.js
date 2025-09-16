@@ -1,11 +1,11 @@
 import express from 'express'
 import cors from 'cors'
-import requests from './middlewares/requests.js'
+import logger from './middlewares/logger.js'
 
 const app = express()
 const port = 3333
 
-app.use(requests)
+app.use(logger)
 app.use(cors())
 app.use(express.json())
 
