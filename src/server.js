@@ -1,11 +1,13 @@
 import express from 'express'
 import cors from 'cors'
+import requests from './middlewares/requests.js'
 
 const app = express()
 const port = 3333
 
-app.use(express.json())
+app.use(requests)
 app.use(cors())
+app.use(express.json())
 
 //Teste de Server
 app.listen(port, () => {
