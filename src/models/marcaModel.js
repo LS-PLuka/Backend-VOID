@@ -39,3 +39,17 @@ export async function getMarca(id) {
         throw new Error("Erro ao buscar marca por ID: " + error.message);
     }
 }
+
+export async function remove(id) {
+    try {
+        await prisma.produto.deleteMany({ where: { marcaId: Number(id) } });
+        
+        const marca = await prisma.marca.delete({
+            where: { id: Number(id) },
+        })
+
+        return marca
+    } catch (error) {
+        throw new Error("Erro ao deletar marca: " + error.message);
+    }
+}
