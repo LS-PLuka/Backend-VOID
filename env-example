@@ -1,0 +1,3 @@
+DATABASE_URL="mysql://root:aluno@localhost:3306/void"
+JWT_SECRET=admin
+JWT_EXPIRES_IN=1d
