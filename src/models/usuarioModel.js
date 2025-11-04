@@ -6,19 +6,23 @@ const prisma = new PrismaClient()
 export async function create(dados) {
     try {
         const usuario = await prisma.usuario.create({
-        data: {
-            nome: dados.nome,
-            email: dados.email,
-            senha: dados.senha,
-            role: dados.role || "cliente",
-            sacola: {
-                create: {}
+            data: {
+                nome: dados.nome,
+                email: dados.email,
+                senha: dados.senha,
+                role: dados.role || "cliente",
+                sacola: {
+                    create: {}
+                }
+            },
+            select: {
+                id: true,
+                nome: true,
+                email: true,
+                role: true,
+                sacola: true
             }
-        },
-        include: {
-            sacola: true
-        }
-    });
+        });
 
         return usuario;
     } catch (error) {
@@ -28,8 +32,16 @@ export async function create(dados) {
 
 export async function list() {
     try {
-        const usuarios = await prisma.usuario.findMany();
-        
+        const usuarios = await prisma.usuario.findMany({
+            select: {
+                id: true,
+                nome: true,
+                email: true,
+                role: true,
+                sacola: true
+            }
+        });
+
         return usuarios;
     } catch (error) {
         throw new Error("Erro ao listar usuários: " + error.message);
@@ -40,8 +52,15 @@ export async function getUser(id) {
     try {
         const usuario = await prisma.usuario.findUnique({
             where: { id: Number(id) },
+            select: {
+                id: true,
+                nome: true,
+                email: true,
+                role: true,
+                sacola: true
+            }
         });
-        
+
         return usuario;
     } catch (error) {
         throw new Error("Erro ao buscar usuário por ID: " + error.message);
@@ -56,9 +75,16 @@ export async function edit(id, dados) {
                 nome: dados.nome,
                 email: dados.email,
                 senha: dados.senha,
+            },
+            select: {
+                id: true,
+                nome: true,
+                email: true,
+                role: true,
+                sacola: true
             }
         });
-        
+
         return usuario;
     } catch (error) {
         throw new Error("Erro ao editar usuário: " + error.message);
@@ -69,8 +95,15 @@ export async function remove(id) {
     try {
         const usuario = await prisma.usuario.delete({
             where: { id: Number(id) },
+            select: {
+                id: true,
+                nome: true,
+                email: true,
+                role: true,
+                sacola: true
+            }
         });
-        
+
         return usuario;
     } catch (error) {
         throw new Error("Erro ao deletar usuário: " + error.message);

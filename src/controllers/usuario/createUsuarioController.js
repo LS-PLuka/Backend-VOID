@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 export async function createUsuarioController(req, res) {
     try {
       const dados = { ...req.body };
-      dados.senha = await bcrypt.hash(dados.senha, 8);      
+      dados.senha = await bcrypt.hash(dados.senha, 10);      
       
       const usuario = await create(dados);
       

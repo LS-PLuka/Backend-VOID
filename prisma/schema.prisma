@@ -43,7 +43,7 @@ model produto {
   criadoEm    DateTime   @default(now())
 
   marcaId Int
-  marca   marca        @relation(fields: [marcaId], references: [id])
+  marca   marca        @relation(fields: [marcaId], references: [id], onDelete: Cascade)
 
   itensSacola itemSacola[]
   favoritos   favorito[]
@@ -54,7 +54,7 @@ model sacola {
   criadoEm  DateTime    @default(now())
 
   usuarioId Int  @unique
-  usuario   usuario     @relation(fields: [usuarioId], references: [id])
+  usuario   usuario     @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 
   itens     itemSacola[]
 }
@@ -64,10 +64,10 @@ model itemSacola {
   quantidade Int      @default(1)
 
   sacolaId   Int
-  sacola     sacola   @relation(fields: [sacolaId], references: [id])
+  sacola     sacola   @relation(fields: [sacolaId], references: [id], onDelete: Cascade)
 
   produtoId  Int
-  produto    produto  @relation(fields: [produtoId], references: [id])
+  produto    produto  @relation(fields: [produtoId], references: [id], onDelete: Cascade)
 }
 
 model favorito {
@@ -75,10 +75,10 @@ model favorito {
   criadoEm   DateTime @default(now())
 
   usuarioId  Int
-  usuario    usuario  @relation(fields: [usuarioId], references: [id])
+  usuario    usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 
   produtoId  Int
-  produto    produto  @relation(fields: [produtoId], references: [id])
+  produto    produto  @relation(fields: [produtoId], references: [id], onDelete: Cascade)
 
   @@unique([usuarioId, produtoId])
 }
@@ -86,7 +86,7 @@ model favorito {
 model cartao {
   id              Int       @id @default(autoincrement())
   usuarioId       Int
-  usuario         usuario   @relation(fields: [usuarioId], references: [id])
+  usuario         usuario   @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
   
   numero          String
   nomeTitular     String
